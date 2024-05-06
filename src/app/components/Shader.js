@@ -1,7 +1,7 @@
  
 export const vertex = `
 precision mediump float;
-varying vec2 Vuv;
+varying vec2 vUv;
 uniform float uTime;
 vec3 mod289(vec3 x) {
     return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -95,10 +95,10 @@ return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
 }
 
     void main() {
-        Vuv = uv;
+        vUv = uv;
         vec3 newPosition = position;
         float noiseFrequency = 3.5;
-        float noiseAmplitude = 0.15;
+        float noiseAmplitude = 0.35;
         vec3 noisePosition = vec3(newPosition.x * noiseFrequency + uTime, newPosition.y, newPosition.z);
         newPosition.z += snoise(noisePosition) * noiseAmplitude;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
@@ -107,8 +107,10 @@ return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
 `
 export const fragment = `
     uniform float uTime;
+    uniform sampler2D uTexture;
+    varying vec2 vUv;
     void main() {
-        
-        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        vec3 texture = texture2D(uTexture, vUv).rgb;
+        gl_FragColor = vec4(texture, 1.0);
     }
 `

@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber'
 
 export default function Scene() {
   return (
-    <Canvas>
+    <Canvas camera={{fov: 10}}>
       <Suspense fallback={null}>
       <Model />
       </Suspense>
