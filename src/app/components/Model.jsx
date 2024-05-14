@@ -3,16 +3,36 @@ import { useEffect, useRef, useState } from 'react'
 import React from 'react'
 import { vertex, fragment } from '../components/Shader'
 import { extend, useFrame, useLoader } from '@react-three/fiber'
+import { gsap } from 'gsap'
 
 
 
 
 
 export default function model() {
+  const [isHovered, setIsHovered] = useState(false)
+
+  useEffect(() => {
+    if(isHovered) {
+      gsap.to(waveRef.current.uniforms.uProg, {
+        duration: 0.5,
+        value: 1.0,
+        ease: 'power.inOut'
+      })
+    }else{
+      gsap.to(waveRef.current.uniforms.uProg, {
+        value: 0.0,
+        duration: 0.5,
+        ease: "power.inOut"
+      })
+    }
+  },[isHovered])
+ 
+
   const waveRef = useRef()
   useFrame(({ clock }) => {
     if (waveRef.current) {
-      waveRef.current.uniforms.uTime.value = clock.getElapsedTime();
+      waveRef.current.uniforms.uTime.value = clock.getElapsedTime() ;
     }
   });
  
@@ -20,7 +40,9 @@ export default function model() {
 
 
   return (
-    <mesh >
+    <mesh
+    onPointerEnter={() => setIsHovered(true)}
+    onPointerLeave={() => setIsHovered(false)}>
       <planeGeometry args={[0.3, 0.6, 16, 16]}/>
       {/* <meshBasicMaterial color={"red"} wireframe={true}/> */}
       <shaderMaterial
@@ -29,7 +51,7 @@ export default function model() {
        fragmentShader={fragment}
       //  wireframe={true}
       uTexture = {image}
-      uniforms = {{uTime: {value: 0.0}, uTexture: { value: image } }}
+      uniforms = {{uTime: {value: 0.0}, uTexture: { value: image }, uProg: {value: 0.0} }}
       
        />
     </mesh>
