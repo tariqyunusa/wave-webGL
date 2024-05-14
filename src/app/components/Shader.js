@@ -2,8 +2,6 @@ export const vertex = `
 precision mediump float;
 varying vec2 vUv;
 uniform float uTime;
-uniform float uProg; // New uniform for controlling the wavy effect
-
 vec3 mod289(vec3 x) {
     return x - floor(x * (1.0 / 289.0)) * 289.0;
 }

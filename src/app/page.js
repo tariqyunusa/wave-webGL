@@ -10,9 +10,6 @@ const Scene = dynamic(() => import('@/app/components/Scene'), {
 
 export default function Home() {
   return (
-    <div className='col'>
- <Scene />
-    </div>
-   
+    <Scene />
   );
 }
