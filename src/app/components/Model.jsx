@@ -13,19 +13,9 @@ export default function model() {
   const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
-    if(isHovered) {
-      gsap.to(waveRef.current.uniforms.uProg, {
-        duration: 0.5,
-        value: 1.0,
-        ease: 'power.inOut'
-      })
-    }else{
-      gsap.to(waveRef.current.uniforms.uProg, {
-        value: 0.0,
-        duration: 0.5,
-        ease: "power.inOut"
-      })
-    }
+   if(isHovered) {
+    waveRef.current.uniforms.uProg.value = isHovered ? 1 : 0;
+   }
   },[isHovered])
  
 
