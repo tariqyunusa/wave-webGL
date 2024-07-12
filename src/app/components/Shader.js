@@ -87,17 +87,10 @@ float snoise(vec3 v) {
 void main() {
   vUv = uv;
   vec3 newPosition = position;
-
-  // Apply wavy effect only if uProg is greater than 0
-  if (uProg > 0.0) {
-      float waveFrequency = 5.0; // Adjust the frequency of the wave
-      float waveAmplitude = 0.1; // Adjust the amplitude of the wave
-      float waveOffset = uTime * 2.0; // Adjust the speed of the wave
-
-      // Calculate displacement using sine wave
-      newPosition.z += sin(position.x * waveFrequency + waveOffset) * waveAmplitude * uProg;
-  }
-
+  float noiseFrequency = 3.5;
+  float noiseAmplitude = 0.35;
+  vec3 noisePosition = vec3(newPosition.x * noiseFrequency + uTime, newPosition.y, newPosition.z);
+  newPosition.z += snoise(noisePosition) * noiseAmplitude;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 }
 `

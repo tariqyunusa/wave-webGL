@@ -10,6 +10,15 @@ const Scene = dynamic(() => import('@/app/components/Scene'), {
 
 export default function Home() {
   return (
-    <Scene />
+    <section>
+     
+      <main>
+       <div className='scene'>
+        <Scene />
+       </div>
+      </main>
+    </section>
+
+    // <Scene />
   );
 }
